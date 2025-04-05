@@ -1,1 +1,2 @@
 streamlit_dynamic_filters==0.1.9
+plotly @ file:///private/var/folders/c_/qfmhj66j0tn016nkx_th4hxm0000gp/T/abs_c1x0dovyom/croot/plotly_1726245570087/work
