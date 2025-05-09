@@ -22,7 +22,7 @@ with st.sidebar:
 
 dynamic_filters.display_filters(location='sidebar')
 
-dynamic_filters.display_df()
+dynamic_filters.display_df(use_container_width = False)
 
 df_filtered = dynamic_filters.filter_df()
 
