@@ -60,7 +60,14 @@ if len(user_input) > 0:
                 height=600)
             # Add the traces of each trajectory figure to the main figure
             for trace in trajectory_fig.data:
-                fig.add_trace(trace)
+                fig.add_trace(trace, 
+                lat='lat', 
+                lon='lon', 
+                hover_name="MMSI", 
+                hover_data=["Name","TS","SOG", "Destination", "IMO"],
+                color_discrete_sequence=["blue"], 
+                zoom=5, 
+                height=600)
 
         # Display the figure in Streamlit
     fig.update_layout(map_style="carto-darkmatter")
