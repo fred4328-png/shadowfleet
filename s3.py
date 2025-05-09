@@ -41,7 +41,7 @@ if len(user_input) > 0:
     ini_data = pd.read_csv('{}.csv'.format(first_traj))
     # Initial empty figure to hold all the trajectories
     fig = px.line_map(ini_data, lat='lat', lon='lon', hover_name="MMSI", hover_data=["Name","TS","SOG", "Destination", "IMO"],
-                        color_discrete_sequence=["red"], zoom=5, height=600)
+                        color_discrete_sequence=["blue"], zoom=5, height=600)
     # Check if any trajectories are selected
     if len(user_input)>0:
         for trajectory in user_input:
