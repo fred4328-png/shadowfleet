@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from streamlit_dynamic_filters import DynamicFilters
 import plotly.express as px
-
+st.set_page_config(layout="wide")
 
 data = pd.read_csv('traj_gdf.csv', index_col=0)
 
