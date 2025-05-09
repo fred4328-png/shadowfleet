@@ -38,7 +38,7 @@ initial_zoom = 5  # Initial zoom level
 user_input = st.multiselect("Select trajectories from filtered data", df_filtered["trajectory_id"])
 
 # Initial empty figure to hold all the trajectories
-fig = px.line_map(pd.DataFrame(columns=["lat", "lon","Name", "TS", "SOG", "Destination", "IMO", "MMSI"]), lat='lat', lon='lon', hover_name="MMSI", hover_data=["Name", "TS", "SOG", "Destination", "IMO"],
+fig = px.line_map(pd.DataFrame(columns=["lat", "lon","Name", "TS", "SOG", "Destination", "IMO", "MMSI"]), lat=initial_lat, lon=initial_lon, hover_name="MMSI", hover_data=["Name", "TS", "SOG", "Destination", "IMO"],
                   color_discrete_sequence=["red"], zoom=5, height=600)
 
 # Check if any trajectories are selected
@@ -64,13 +64,14 @@ if user_input:
     
     # Finalize the layout of the map
     fig.update_layout(
-        map_style="carto-darkmatter",
-        margin={"r":0,"t":0,"l":0,"b":0},
-        geo=dict(
-            center=dict(lat=initial_lat, lon=initial_lon),  # Fixed center point
-            zoom=initial_zoom  # Fixed zoom level
-        )
-    )
+    mapbox=dict(
+        style="carto-darkmatter",
+        center=dict(lat=initial_lat, lon=initial_lon),  # Fixed center point
+        zoom=initial_zoom  # Fixed zoom level
+    ),
+    margin={"r":0,"t":0,"l":0,"b":0})
+
+
     
     # Display the figure in Streamlit
     st.plotly_chart(fig)
