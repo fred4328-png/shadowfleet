@@ -36,9 +36,9 @@ initial_zoom = 5  # Initial zoom level
 
 # Assuming df_filtered is a DataFrame containing filtered data
 user_input = st.multiselect("Select trajectories from filtered data", df_filtered["trajectory_id"])
-
-first_traj = user_input.pop(0)
-ini_data = pd.read_csv('{}.csv'.format(first_traj))
+if user_input:
+    first_traj = user_input.pop(0)
+    ini_data = pd.read_csv('{}.csv'.format(first_traj))
 # Initial empty figure to hold all the trajectories
 fig = px.line_map(ini_data, lat='lat', lon='lon', hover_name="MMSI", hover_data=["Name","TS","SOG", "Destination", "IMO"],
                         color_discrete_sequence=["red"], zoom=5, height=600)
@@ -66,4 +66,6 @@ if len(user_input)>1:
 
 else:
     st.write("Nothing selected or no data available.")
+fig.update_layout(map_style="carto-darkmatter")
+fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 st.plotly_chart(fig)
