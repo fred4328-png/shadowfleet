@@ -38,7 +38,7 @@ initial_zoom = 5  # Initial zoom level
 user_input = st.multiselect("Select trajectories from filtered data", df_filtered["trajectory_id"])
 
 # Initial empty figure to hold all the trajectories
-fig = px.line_map(pd.DataFrame(columns=["lat", "lon","Name", "TS", "SOG", "Destination", "IMO", "MMSI"]), lat=initial_lat, lon=initial_lon, hover_name="MMSI", hover_data=["Name", "TS", "SOG", "Destination", "IMO"],
+fig = px.line_map(pd.DataFrame(columns=["lat", "lon","Name", "TS", "SOG", "Destination", "IMO", "MMSI"]), lat="lat", lon="lat", hover_name="MMSI", hover_data=["Name", "TS", "SOG", "Destination", "IMO"],
                   color_discrete_sequence=["red"], zoom=5, height=600)
 
 # Check if any trajectories are selected
