@@ -39,7 +39,7 @@ user_input = st.multiselect("Select trajectories from filtered data", df_filtere
 
 # Initial empty figure to hold all the trajectories
 fig = px.line_map(pd.DataFrame(columns=["lat", "lon","Name", "TS", "SOG", "Destination", "IMO", "MMSI"]), lat="lat", lon="lat", hover_name="MMSI", hover_data=["Name", "TS", "SOG", "Destination", "IMO"],
-                  color_discrete_sequence=["red"], zoom=5, height=600)
+                  color_discrete_sequence=["red"])
 
 # Check if any trajectories are selected
 if user_input:
@@ -53,9 +53,7 @@ if user_input:
             lat='lat', 
             lon='lon', 
             hover_name=None,  # Optional to disable hover info
-            color_discrete_sequence=["blue"],  # Different color for the trajectory line
-            zoom=5, 
-            height=600
+            color_discrete_sequence=["red"],  # Different color for the trajectory line
         )
         
         # Add the traces of each trajectory figure to the main figure
@@ -66,10 +64,12 @@ if user_input:
     fig.update_layout(
     mapbox=dict(
         style="carto-darkmatter",
-        center=dict(lat=initial_lat, lon=initial_lon),  # Fixed center point
-        zoom=initial_zoom  # Fixed zoom level
-    ),
-    margin={"r":0,"t":0,"l":0,"b":0})
+        center=dict(lat=initial_lat, lon=initial_lon),
+        zoom=initial_zoom
+    )
+)
+
+
 
 
     
