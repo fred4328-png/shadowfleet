@@ -27,7 +27,7 @@ dynamic_filters.display_df()
 df_filtered = dynamic_filters.filter_df()
 
 user_input = st.multiselect("Select trajectories from filtered data",df_filtered["trajectory_id"])
-fig = px.line_map(lat='lat', lon='lon', hover_name="MMSI", hover_data=["Name","TS","SOG", "Destination", "IMO"],
+fig = px.line_map(pd.DataFrame(columns=["lat", "lon"]), lat='lat', lon='lon', hover_name="MMSI", hover_data=["Name","TS","SOG", "Destination", "IMO"],
                         color_discrete_sequence=["red"], zoom=5, height=600)
 # Create a button to trigger the action
 if user_input:
