@@ -44,7 +44,7 @@ fig = px.line_map(ini_data, lat='lat', lon='lon', hover_name="MMSI", hover_data=
                         color_discrete_sequence=["red"], zoom=5, height=600)
 
 # Check if any trajectories are selected
-if len(user_input)>0:
+if len(user_input)>1:
     for trajectory in user_input:
         # Read data for the selected trajectory
         data = pd.read_csv('{}.csv'.format(trajectory))
@@ -63,9 +63,7 @@ if len(user_input)>0:
             fig.add_trace(trace)
     
     # Display the figure in Streamlit
-    
 
 else:
     st.write("Nothing selected or no data available.")
-fig = px.line_map(data, lat='lat', lon='lon', hover_name="MMSI", hover_data=["Name","TS","SOG", "Destination", "IMO"],
-                        color_discrete_sequence=["red"], zoom=5, height=600)
+st.plotly_chart(fig)
