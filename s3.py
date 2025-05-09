@@ -53,10 +53,11 @@ if len(user_input) > 0:
                 data, 
                 lat='lat', 
                 lon='lon', 
-                hover_name=None,  # Optional to disable hover info
-                color_discrete_sequence=["blue"],  # Different color for the trajectory line
-            )
-
+                hover_name="MMSI", 
+                hover_data=["Name","TS","SOG", "Destination", "IMO"],
+                color_discrete_sequence=["blue"], 
+                zoom=5, 
+                height=600)
             # Add the traces of each trajectory figure to the main figure
             for trace in trajectory_fig.data:
                 fig.add_trace(trace)
