@@ -24,14 +24,30 @@ dynamic_filters.display_filters(location='sidebar')
 
 dynamic_filters.display_df()
 
-user_input = st.text_input("Enter Trajectory ID")
+df_filtered = dynamic_filters.filter_df()
 
-# Create a button to trigger the action
-if st.button("Submit"):
-    # Display the user input when button is pressed
-    data = pd.read_csv('{}.csv'.format(user_input))
-    fig = px.line_map(data, lat='lat', lon='lon', hover_name="MMSI", hover_data=["Name","TS","SOG", "Destination", "IMO"],
+user_input = st.multiselect("Select trajectories from filtered data",df_filtered["trajectory_id"])
+fig = px.line_map(lat='lat', lon='lon', hover_name="MMSI", hover_data=["Name","TS","SOG", "Destination", "IMO"],
                         color_discrete_sequence=["red"], zoom=5, height=600)
+# Create a button to trigger the action
+if user_input:
+    # Display the user input when button is pressed
+    for trajectory in user_input:
+        data = pd.read_csv('{}.csv'.format(trajectory))
+        trajectory_fig = px.line_map(
+        trajectory, 
+        lat='lat', 
+        lon='lon', 
+        hover_name=None,  # Optional to disable hover info
+        color_discrete_sequence=["blue"],  # Different color for the trajectory line
+        zoom=5, 
+        height=600
+        )
+    for trace in trajectory_fig.data:
+        fig.add_trace(trace)
     fig.update_layout(map_style="carto-darkmatter")
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    
     st.plotly_chart(fig)
+else:
+    st.write("nothing here")
