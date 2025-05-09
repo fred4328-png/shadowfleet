@@ -26,9 +26,13 @@ dynamic_filters.display_df()
 
 df_filtered = dynamic_filters.filter_df()
 
-import pandas as pd
-import plotly.express as px
-import streamlit as st
+
+
+# Fixed starting view (latitude, longitude) and zoom level
+initial_lat = 55.6761  # Latitude of Copenhagen (adjust based on your needs)
+initial_lon = 12.5683  # Longitude of Copenhagen (adjust based on your needs)
+initial_zoom = 5  # Initial zoom level
+
 
 # Assuming df_filtered is a DataFrame containing filtered data
 user_input = st.multiselect("Select trajectories from filtered data", df_filtered["trajectory_id"])
@@ -59,8 +63,14 @@ if user_input:
             fig.add_trace(trace)
     
     # Finalize the layout of the map
-    fig.update_layout(map_style="carto-darkmatter")
-    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    fig.update_layout(
+        map_style="carto-darkmatter",
+        margin={"r":0,"t":0,"l":0,"b":0},
+        geo=dict(
+            center=dict(lat=initial_lat, lon=initial_lon),  # Fixed center point
+            zoom=initial_zoom  # Fixed zoom level
+        )
+    )
     
     # Display the figure in Streamlit
     st.plotly_chart(fig)
