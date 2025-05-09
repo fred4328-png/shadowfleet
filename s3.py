@@ -26,28 +26,44 @@ dynamic_filters.display_df()
 
 df_filtered = dynamic_filters.filter_df()
 
-user_input = st.multiselect("Select trajectories from filtered data",df_filtered["trajectory_id"])
-fig = px.line_map(pd.DataFrame(columns=["lat", "lon"]), lat='lat', lon='lon', hover_name="MMSI", hover_data=["Name","TS","SOG", "Destination", "IMO"],
-                        color_discrete_sequence=["red"], zoom=5, height=600)
-# Create a button to trigger the action
+import pandas as pd
+import plotly.express as px
+import streamlit as st
+
+# Assuming df_filtered is a DataFrame containing filtered data
+user_input = st.multiselect("Select trajectories from filtered data", df_filtered["trajectory_id"])
+
+# Initial empty figure to hold all the trajectories
+fig = px.line_map(pd.DataFrame(columns=["lat", "lon"]), lat='lat', lon='lon', hover_name="MMSI", hover_data=["Name", "TS", "SOG", "Destination", "IMO"],
+                  color_discrete_sequence=["red"], zoom=5, height=600)
+
+# Check if any trajectories are selected
 if user_input:
-    # Display the user input when button is pressed
     for trajectory in user_input:
+        # Read data for the selected trajectory
         data = pd.read_csv('{}.csv'.format(trajectory))
+        
+        # Create the trajectory-specific figure
         trajectory_fig = px.line_map(
-        trajectory, 
-        lat='lat', 
-        lon='lon', 
-        hover_name=None,  # Optional to disable hover info
-        color_discrete_sequence=["blue"],  # Different color for the trajectory line
-        zoom=5, 
-        height=600
+            data, 
+            lat='lat', 
+            lon='lon', 
+            hover_name=None,  # Optional to disable hover info
+            color_discrete_sequence=["blue"],  # Different color for the trajectory line
+            zoom=5, 
+            height=600
         )
-    for trace in trajectory_fig.data:
-        fig.add_trace(trace)
+        
+        # Add the traces of each trajectory figure to the main figure
+        for trace in trajectory_fig.data:
+            fig.add_trace(trace)
+    
+    # Finalize the layout of the map
     fig.update_layout(map_style="carto-darkmatter")
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     
+    # Display the figure in Streamlit
     st.plotly_chart(fig)
+
 else:
-    st.write("nothing here")
+    st.write("Nothing selected or no data available.")
