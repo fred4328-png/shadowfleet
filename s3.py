@@ -36,7 +36,7 @@ initial_zoom = 5  # Initial zoom level
 
 # Assuming df_filtered is a DataFrame containing filtered data
 user_input = st.multiselect("Select trajectories from filtered data", df_filtered["trajectory_id"])
-if user_input:
+if len(user_input) > 0:
     first_traj = user_input.pop(0)
     ini_data = pd.read_csv('{}.csv'.format(first_traj))
 # Initial empty figure to hold all the trajectories
@@ -44,7 +44,7 @@ fig = px.line_map(ini_data, lat='lat', lon='lon', hover_name="MMSI", hover_data=
                         color_discrete_sequence=["red"], zoom=5, height=600)
 
 # Check if any trajectories are selected
-if len(user_input)>1:
+if len(user_input)>0:
     for trajectory in user_input:
         # Read data for the selected trajectory
         data = pd.read_csv('{}.csv'.format(trajectory))
