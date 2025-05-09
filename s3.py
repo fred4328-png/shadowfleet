@@ -35,7 +35,7 @@ initial_zoom = 5  # Initial zoom level
 
 
 # Assuming df_filtered is a DataFrame containing filtered data
-user_input = st.multiselect("Select trajectories from filtered data", df_filtered["trajectory_id"], default=df_filtered["trajectory_id"])
+user_input = st.multiselect("Select trajectories from filtered data", df_filtered["trajectory_id"])
 if len(user_input) > 0:
     first_traj = user_input.pop(0)
     ini_data = pd.read_csv('{}.csv'.format(first_traj))
